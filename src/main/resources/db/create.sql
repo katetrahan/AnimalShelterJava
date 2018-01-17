@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS animals (
 CREATE TABLE IF NOT EXISTS customer (
   id int PRIMARY KEY auto_increment,
   name VARCHAR,
-  phone INT,
+  phone VARCHAR,
   typePref VARCHAR,
   breedPref VARCHAR
 );

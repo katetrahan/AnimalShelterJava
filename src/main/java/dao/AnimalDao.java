@@ -10,20 +10,19 @@ public interface AnimalDao {
 
     void add (Animal animal);
 
-//    //read - list in chronological order
-//
+    //read - list in chronological order
+
     Animal findById(int id);
 
-//    List<Animal> getAllAnimals(int id);
-//
+    List<Animal> getAllAnimals();
 
-//
-//    //update
-//    void update();
-//
-//    //delete
-//    void deleteById(int id);
-//    void clearAllCategories();
+
+    //update
+    void update(int id, String name, String gender, String type, String breed);
+
+    //delete
+    void deleteById(int id);
+    void clearAllAnimals();
 
 
 }

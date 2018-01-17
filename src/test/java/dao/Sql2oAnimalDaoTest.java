@@ -48,8 +48,54 @@ public class Sql2oAnimalDaoTest {
         animalDao.add(animal);
         Animal foundAnimal = animalDao.findById(animal.getId());
         assertEquals(animal, foundAnimal);
-
     }
+
+    @Test
+    public void addedAnimalGetsReturnedFromGetAll() throws Exception {
+        Animal animal = setupNewAnimal();
+        animalDao.add(animal);
+        assertEquals(1, animalDao.getAllAnimals().size());
+    }
+
+    @Test
+    public void noAnimalsReturnsEmptyList() throws Exception {
+        assertEquals(0, animalDao.getAllAnimals().size());
+    }
+
+    @Test
+    public void updateChangesAnimalContent() throws Exception {
+        String initialType = "pig";
+        Animal animal = new Animal("kate", "female", initialType, "spanial");
+        animalDao.add(animal);
+
+        animalDao.update(animal.getId(),"kate", "female", "dog", "spanial");
+        Animal updatedAnimal = animalDao.findById(animal.getId());
+        assertNotEquals(initialType, updatedAnimal.getType());
+    }
+
+    @Test
+    public void deletesByIdDeletesCorrectAnimal() throws Exception {
+        Animal animal = setupNewAnimal();
+        animalDao.add(animal);
+        animalDao.deleteById(animal.getId());
+        assertEquals(0, animalDao.getAllAnimals().size());
+    }
+
+    @Test
+    public void clearsAllAnimals() throws Exception {
+        Animal animal = setupNewAnimal();
+        Animal otherAnimal = setupNewAnimal();
+        animalDao.add(animal);
+        animalDao.add(otherAnimal);
+        int animalDaoSize = animalDao.getAllAnimals().size();
+        animalDao.clearAllAnimals();
+        assertTrue(animalDaoSize > 0 && animalDaoSize > animalDao.getAllAnimals().size());
+    }
+
+
+
+
+
 
 
     public Animal setupNewAnimal() {

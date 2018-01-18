@@ -45,6 +45,21 @@ public class Sql2oCustomerDaoTest {
         assertNotEquals(originalCustomerId, customer.getId());
     }
 
+    @Test
+    public void existingCustomersCanBeFoundById() throws Exception {
+        Customer customer = setupNewCustomer();
+        customerDao.add(customer);
+        Customer foundCustomer = customerDao.findById(customer.getId());
+        assertEquals(customer,foundCustomer);
+    }
+
+    @Test
+    public void addedCustomersReturnFromGetAll() throws Exception {
+        Customer customer = setupNewCustomer();
+        customerDao.add(customer);
+        assertEquals(1,customerDao.getAllCustomers().size());
+    }
+
 
 
     public Customer setupNewCustomer() {

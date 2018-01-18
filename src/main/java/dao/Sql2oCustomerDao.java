@@ -17,7 +17,7 @@ import java.util.List;
 
         @Override
         public void add(Customer customer) {
-            String sql = "INSERT INTO customer (name) VALUES (:name)";
+            String sql = "INSERT INTO customer (name, phone, typePref, breedPref) VALUES (:name, :phone, :typePref, :breedPref)";
             try (Connection con = sql2o.open()) {
                 int id = (int) con.createQuery(sql)
                         .bind(customer)
@@ -28,6 +28,24 @@ import java.util.List;
                 System.out.println(ex);
             }
 
+        }
+
+        @Override
+        public  List<Customer> getAllCustomers() {
+            try (Connection con = sql2o.open()) {
+                return con.createQuery("SELECT * FROM customer")
+                        .executeAndFetch(Customer.class);
+
+            }
+        }
+
+        @Override
+        public Customer findById(int id){
+            try(Connection con = sql2o.open()){
+                return con.createQuery("SELECT * FROM customer WHERE id = :id")
+                        .addParameter("id", id)
+                        .executeAndFetchFirst(Customer.class);
+            }
         }
     }
 
